@@ -49,6 +49,8 @@ import face4j.response.StatusResponse;
 import face4j.response.StatusResponseImpl;
 import face4j.response.TrainResponse;
 import face4j.response.TrainResponseImpl;
+import face4j.response.LimitsResponse;
+import face4j.response.LimitsResponseImpl;
 import face4j.response.UsersResponse;
 import face4j.response.UsersResponseImpl;
 
@@ -429,6 +431,17 @@ h	 * @see {@link FaceClient#detect(URL)}
 		
 		final String json = executePost(baseURI.resolve(Api.USERS), params);
 		final UsersResponse response = new UsersResponseImpl(json, namespaces);
+		
+		return response;
+	}
+	
+	/**
+	 * @see {@link FaceClient#usage()}
+	 */
+	public LimitsResponse limits () throws FaceClientException, FaceServerException
+	{
+		final String json = executePost(baseURI.resolve(Api.LIMITS), reqd);
+		final LimitsResponse response = new LimitsResponseImpl(json);
 		
 		return response;
 	}

@@ -35,6 +35,7 @@ import face4j.model.SavedTag;
 import face4j.model.UserStatus;
 import face4j.response.GroupResponse;
 import face4j.response.TrainResponse;
+import face4j.response.LimitsResponse;
 import face4j.response.UsersResponse;
 /**
  * Interface which describes how a class interacting with the face.com API would behave. This interface
@@ -307,6 +308,13 @@ public interface FaceClient
 	 */
 	public UsersResponse users (String namespaces) throws FaceClientException, FaceServerException;
 	
+	/**
+	 * Returns usage statistics
+	 * 
+	 * @throws FaceServerException
+	 * @throws FaceClientException
+	 */
+	public LimitsResponse limits () throws FaceClientException, FaceServerException;
 	/**
 	 * Set up facebook credentials
 	 * 
