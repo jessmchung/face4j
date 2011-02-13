@@ -35,6 +35,7 @@ import face4j.model.SavedTag;
 import face4j.model.UserStatus;
 import face4j.response.GroupResponse;
 import face4j.response.TrainResponse;
+import face4j.response.UsersResponse;
 /**
  * Interface which describes how a class interacting with the face.com API would behave. This interface
  * currently does not support callbacks or tagging passwords. If the {@link AndroidFaceClient} implementation 
@@ -295,6 +296,16 @@ public interface FaceClient
 	 * 
 	 */
 	public List<Photo> facebookGet (final String uids) throws FaceClientException, FaceServerException;
+	
+	/**
+	 * Returns a list of users for specified namespaces
+	 * 
+	 * @param namespaces Comma delimited {@link String} of namespaces to get users for
+	 * 
+	 * @throws FaceServerException
+	 * @throws FaceClientException
+	 */
+	public UsersResponse users (String namespaces) throws FaceClientException, FaceServerException;
 	
 	/**
 	 * Set up facebook credentials

@@ -41,6 +41,10 @@ final class Api
 	public static final String GET_TAGS    = "/tags/get.json";
 	public static final String ADD_TAG     = "/tags/add.json";
 	
+	public static final String LIMITS     = "/account/limits.json";
+	public static final String NAMESPACES = "/account/namspaces.json";
+	public static final String USERS      = "/account/users.json";
+	
 	public static final String FACEBOOK    = "/facebook/get.json";
 	
 	private Api () {}

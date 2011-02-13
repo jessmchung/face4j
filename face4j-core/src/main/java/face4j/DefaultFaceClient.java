@@ -28,7 +28,6 @@ import java.net.URL;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
-import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +49,8 @@ import face4j.response.StatusResponse;
 import face4j.response.StatusResponseImpl;
 import face4j.response.TrainResponse;
 import face4j.response.TrainResponseImpl;
+import face4j.response.UsersResponse;
+import face4j.response.UsersResponseImpl;
 
 /**
  * Default implementation of {@link FaceClient} interface
@@ -131,7 +132,6 @@ public class DefaultFaceClient implements FaceClient
 	}	
 	
 	/**
-	 * @throws JSONException 
 	 * @see {@link FaceClient#removeTags(String)}
 	 */
 	public List<RemovedTag> removeTags (final String tids) throws FaceClientException, FaceServerException
@@ -150,7 +150,6 @@ public class DefaultFaceClient implements FaceClient
 	}
 	
 	/**
-	 * @throws JSONException 
 	 * @see {@link FaceClient#train(String)}
 	 */
 	public TrainResponse train (final String uids) throws FaceClientException, FaceServerException
@@ -167,7 +166,6 @@ public class DefaultFaceClient implements FaceClient
 	}
 	
 	/**
-	 *@throws JSONException 
 	 * @see {@link FaceClient#addTag(String, float, float, int, int, String, String, String)}
 	 */
 	public void addTag (
@@ -201,7 +199,6 @@ public class DefaultFaceClient implements FaceClient
 	}
 	
 	/**
-	 * @throws JSONException 
 	 * @see {@link FaceClient#getTags(String, String, String, String, boolean, int)}
 	 */
 	public List<Photo> getTags (
@@ -217,7 +214,6 @@ public class DefaultFaceClient implements FaceClient
 	}
 	
 	/**
-	 * @throws JSONException 
 	 * @see {@link FaceClient#getTags(String, String, String, String, String, boolean, int)}
 	 */
 	public List<Photo> getTags (
@@ -249,8 +245,6 @@ public class DefaultFaceClient implements FaceClient
 	}
 
 	/**
-	 * @throws JSONException 
-	 * @throws FaceClientParseException 
 	 * @see {@list FaceClient#saveTags(String, String, String)}
 	 */
 	public List<SavedTag> saveTags (final String tids, final String uid, final String label) 
@@ -273,7 +267,6 @@ public class DefaultFaceClient implements FaceClient
 	}
 	
 	/**
-	 * @throws JSONException 
 	 * @see {@link FaceClient#recognize(URL, String)}
 	 */
 	public Photo recognize (final File imageFile, final String uids) throws FaceClientException, FaceServerException
@@ -294,7 +287,6 @@ public class DefaultFaceClient implements FaceClient
 	}
 	
 	/**
-	 * @throws JSONException 
 	 * @see {@link FaceClient#recognize(String, String)}
 	 */
 	public List<Photo> recognize (final String urls, final String uids) throws FaceClientException, FaceServerException
@@ -315,8 +307,7 @@ public class DefaultFaceClient implements FaceClient
 	}
 	
 	/**
-	 * @throws JSONException 
-	 * @see {@link FaceClient#detect(URL)}
+h	 * @see {@link FaceClient#detect(URL)}
 	 */
 	public Photo detect (final File imageFile) throws FaceClientException, FaceServerException
 	{	
@@ -330,7 +321,6 @@ public class DefaultFaceClient implements FaceClient
 	}
 
 	/**
-	 * @throws JSONException 
 	 * @see {@link FaceClient#detect(String)}
 	 */
 	public List<Photo> detect (final String urls) throws FaceClientException, FaceServerException
@@ -349,7 +339,6 @@ public class DefaultFaceClient implements FaceClient
 	}
 
 	/**
-	 * @throws JSONException 
 	 * @see {@link FaceClient#status(String)}
 	 */
 	public List<UserStatus> status (final String uids) throws FaceClientException, FaceServerException
@@ -387,7 +376,6 @@ public class DefaultFaceClient implements FaceClient
 	}
 
 	/**
-	 * @throws JSONException 
 	 * @see {@link FaceClient#group(String, String)}
 	 */
 	public GroupResponse group(String urls, String uids) throws FaceClientException, FaceServerException
@@ -409,7 +397,6 @@ public class DefaultFaceClient implements FaceClient
 	}
 
 	/**
-	 * @throws JSONException 
 	 * @see {@link FaceClient#group(File, String)}
 	 */
 	public GroupResponse group (File imageFile, String uids) throws FaceClientException, FaceServerException 
@@ -429,6 +416,22 @@ public class DefaultFaceClient implements FaceClient
 		return response;
 	}
 
+	/** 
+	 * @see {@link FaceClient#users(String)}
+	 */
+	public UsersResponse users (String namespaces) throws FaceClientException, FaceServerException
+	{
+		Validate.notEmpty(namespaces, "Must supply namespace(s)");
+		
+		final Parameters params = new Parameters();
+		params.put("namespaces", namespaces);
+		params.putAll(reqd.getMap());
+		
+		final String json = executePost(baseURI.resolve(Api.USERS), params);
+		final UsersResponse response = new UsersResponseImpl(json, namespaces);
+		
+		return response;
+	}
 	/**
 	 * @see {@link FaceClient#setFacebookOauth2(String, String)}
 	 */
