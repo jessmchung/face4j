@@ -8,6 +8,20 @@
   <packaging>pom</packaging>
   <name>face4j</name>
 
+  
+  <developers>
+  	<developer>
+  		<id>mhendred</id>
+		<name>Marlon Hendred</name>
+        <email>mhendred@gmail.com</email>
+		<roles>
+			<role>developer</role>
+        </roles>
+		<timezone>PST</timezone>
+		
+		</developer>
+		
+		</developers>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
