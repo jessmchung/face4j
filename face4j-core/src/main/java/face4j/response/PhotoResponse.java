@@ -26,7 +26,7 @@ import java.util.List;
 
 import face4j.model.Photo;
 
-public interface PhotoResponse extends UsageResponse
+public interface PhotoResponse extends LimitsResponse
 {
 	/**
 	 * @return A {@code List<Photo>} from the response

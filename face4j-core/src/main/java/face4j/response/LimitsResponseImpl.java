@@ -22,25 +22,33 @@
 
 package face4j.response;
 
+import static face4j.response.ResponseHelper.optInt;
+
 import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import face4j.exception.FaceClientException;
 
-abstract class UsageResponseImpl extends AbstractResponse implements UsageResponse
+public class LimitsResponseImpl extends AbstractResponse implements LimitsResponse
 {
 	private String restTimeString;
 
 	private Date resetDate;
 
+	private int namespaceLimit;
+	
+	private int namespaceUsed;
+	
+	private int namespaceRemaining;
+	
 	private int remaining;
 
 	private int limit;
 
 	private int used;
 
-	public UsageResponseImpl(final String json) throws FaceClientException
+	public LimitsResponseImpl(final String json) throws FaceClientException
 	{
 		super(json);
 		
@@ -48,7 +56,9 @@ abstract class UsageResponseImpl extends AbstractResponse implements UsageRespon
 		{		
 			// usage stats
 			final JSONObject usage = response.getJSONObject("usage");
-			
+			namespaceRemaining = optInt(usage, "namespace_remaining");
+			namespaceUsed      = optInt(usage, "namespace_used");
+			namespaceLimit	   = optInt(usage, "namespace_limit");
 			restTimeString = usage.getString("reset_time_text");
 			resetDate	   = new Date(usage.getLong("reset_time"));
 			remaining	   = usage.getInt("remaining");
@@ -102,10 +112,37 @@ abstract class UsageResponseImpl extends AbstractResponse implements UsageRespon
 	{
 		return resetDate;
 	}
-	
-	@Override
-	public String toString()
+
+	public int getNamespaceLimit ()
 	{
-		return super.toString();
+		return namespaceLimit;
 	}
+
+	public int getNamespaceUsed ()
+	{
+		return namespaceUsed;
+	}
+
+	public int getNamespaceRemaining ()
+	{
+		return namespaceRemaining;
+	}
+
+	@Override
+	public String toString ()
+	{
+		StringBuilder builder = new StringBuilder();
+		
+		builder.append("LimitsResponseImpl [limit=").append(limit)
+			   .append(", namespaceLimit=").append(namespaceLimit)
+			   .append(", namespaceRemaining=").append(namespaceRemaining)
+			   .append(", namespaceUsed=").append(namespaceUsed)
+			   .append(", remaining=").append(remaining)
+			   .append(", resetDate=").append(resetDate)
+			   .append(", restTimeString=").append(restTimeString)
+			   .append(", used=").append(used).append("]");
+		
+		return builder.toString();
+	}
+
 }

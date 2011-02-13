@@ -2,7 +2,7 @@ package face4j.response;
 
 import java.util.Date;
 
-public interface UsageResponse
+public interface LimitsResponse
 {
 
 	public int getUsed ();
@@ -11,6 +11,12 @@ public interface UsageResponse
 
 	public int getLimit ();
 
+	public int getNamespaceLimit();
+	
+	public int getNamespaceUsed();
+	
+	public int getNamespaceRemaining();
+	
 	public String getRestTimeString ();
 
 	public Date getResetDate ();

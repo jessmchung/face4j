@@ -21,7 +21,7 @@
  */
 package face4j.response;
 
-public interface AddTagResponse extends UsageResponse 
+public interface AddTagResponse extends LimitsResponse 
 {
 	public String getTID();
 }

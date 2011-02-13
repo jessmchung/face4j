@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import face4j.model.Group;
 import face4j.model.Photo;
@@ -105,5 +106,10 @@ final class ResponseHelper
 		}
 		
 		return strings;
+	}
+	
+	static int optInt (JSONObject jObj, String name) throws JSONException
+	{
+		return jObj.isNull(name) ? -1 : jObj.getInt(name);
 	}
 }
