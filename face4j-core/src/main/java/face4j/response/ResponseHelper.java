@@ -94,4 +94,16 @@ final class ResponseHelper
 		
 		return groups;
 	}
+	
+	static List<String> toStringList (JSONArray jArr) throws JSONException
+	{
+		final List<String> strings = new ArrayList<String>();
+		
+		for (int i = 0; i < jArr.length(); i++)
+		{
+			strings.add(jArr.getString(i));
+		}
+		
+		return strings;
+	}
 }
