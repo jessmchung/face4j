@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>face4j</artifactId>
+    <groupId>org.face4j</groupId>
+    <version>1.5</version>
+  </parent>
+  <groupId>org.face4j</groupId>
+  <artifactId>face4j-examples</artifactId>
+  <version>${project.parent.version}</version>
+  <name>face4j-examples</name>
+  <url>http://github.com/mhendred/face4j</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.face4j</groupId>
+      <artifactId>face4j-core</artifactId>
+      <version>${project.parent.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.google.code.facebookapi</groupId>
+    	<artifactId>facebook-java-api</artifactId>
+    	<version>3.0.4</version>
+    </dependency>
+  </dependencies>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+</project>
