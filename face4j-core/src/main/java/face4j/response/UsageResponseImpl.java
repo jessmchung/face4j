@@ -50,14 +50,15 @@ abstract class UsageResponseImpl extends AbstractResponse implements UsageRespon
 			final JSONObject usage = response.getJSONObject("usage");
 			
 			restTimeString = usage.getString("reset_time_text");
-			resetDate      = new Date(usage.getLong("reset_time"));
-			remaining 	   = usage.getInt("remaining");
+			resetDate	   = new Date(usage.getLong("reset_time"));
+			remaining	   = usage.getInt("remaining");
 			used           = usage.getInt("used");
 			limit          = usage.getInt("limit");
 		}
 		
 		catch (JSONException jex)
 		{
+			logger.error("Error: ", jex);
 			throw new FaceClientException(jex);
 		}
 	}
