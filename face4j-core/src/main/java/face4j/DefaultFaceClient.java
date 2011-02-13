@@ -33,12 +33,17 @@ import org.slf4j.LoggerFactory;
 
 import face4j.exception.FaceClientException;
 import face4j.exception.FaceServerException;
+import face4j.model.Namespace;
 import face4j.model.Photo;
 import face4j.model.RemovedTag;
 import face4j.model.SavedTag;
 import face4j.model.UserStatus;
 import face4j.response.GroupResponse;
 import face4j.response.GroupResponseImpl;
+import face4j.response.LimitsResponse;
+import face4j.response.LimitsResponseImpl;
+import face4j.response.NamespaceResponse;
+import face4j.response.NamespaceResponseImpl;
 import face4j.response.PhotoResponse;
 import face4j.response.PhotoResponseImpl;
 import face4j.response.RemoveTagResponse;
@@ -49,8 +54,6 @@ import face4j.response.StatusResponse;
 import face4j.response.StatusResponseImpl;
 import face4j.response.TrainResponse;
 import face4j.response.TrainResponseImpl;
-import face4j.response.LimitsResponse;
-import face4j.response.LimitsResponseImpl;
 import face4j.response.UsersResponse;
 import face4j.response.UsersResponseImpl;
 
@@ -445,6 +448,34 @@ h	 * @see {@link FaceClient#detect(URL)}
 		
 		return response;
 	}
+	
+	/**
+	 * @see {@link FaceClient#namespaces()}
+	 */
+	public List<Namespace> namespaces() throws FaceClientException, FaceServerException
+	{
+		final String json = executePost(baseURI.resolve(Api.NAMESPACES), reqd);
+		final NamespaceResponse response = new NamespaceResponseImpl(json);
+		
+		return response.getNamespaces();
+	}
+	
+	/**
+	 * @see {@link FaceClient#getNamespace(String)
+	 */
+	public Namespace getNamespace(String namespace) throws FaceClientException, FaceServerException
+	{
+		for (Namespace ns : namespaces())
+		{
+			if (ns.getName().equals(namespace))
+			{
+				return ns;
+			}
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * @see {@link FaceClient#setFacebookOauth2(String, String)}
 	 */
@@ -513,11 +544,6 @@ h	 * @see {@link FaceClient#detect(URL)}
 			logger.info("POSTing to: {} ", uri.toString());
 			logger.info("Detector mode [{}]", (isAggressive ? "agressive" : "normal"));
 			logger.info("POST parameters: {}", params.toString());
-		}
-		
-		if (logger.isDebugEnabled())
-		{
-			
 		}
 		
 		if (file != null)

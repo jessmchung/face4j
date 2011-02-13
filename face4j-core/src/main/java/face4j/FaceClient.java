@@ -29,13 +29,14 @@ import java.util.List;
 import face4j.exception.FaceClientException;
 import face4j.exception.FaceServerException;
 import face4j.model.Face;
+import face4j.model.Namespace;
 import face4j.model.Photo;
 import face4j.model.RemovedTag;
 import face4j.model.SavedTag;
 import face4j.model.UserStatus;
 import face4j.response.GroupResponse;
-import face4j.response.TrainResponse;
 import face4j.response.LimitsResponse;
+import face4j.response.TrainResponse;
 import face4j.response.UsersResponse;
 /**
  * Interface which describes how a class interacting with the face.com API would behave. This interface
@@ -315,6 +316,23 @@ public interface FaceClient
 	 * @throws FaceClientException
 	 */
 	public LimitsResponse limits () throws FaceClientException, FaceServerException;
+	
+	/**
+	 * Get a {@code List<{@link Namespace}>} associated with your API key
+	 * 
+	 * @throws FaceServerException
+	 * @throws FaceClientException
+	 */
+	public List<Namespace> namespaces() throws FaceClientException, FaceServerException;
+	
+	/**
+	 * Get a stats for a particular {@Link Namespace}
+	 * 
+	 * @throws FaceServerException
+	 * @throws FaceClientException
+	 */
+	public Namespace getNamespace(String namespace) throws FaceClientException, FaceServerException;
+	
 	/**
 	 * Set up facebook credentials
 	 * 

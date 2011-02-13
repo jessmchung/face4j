@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import face4j.model.Group;
+import face4j.model.Namespace;
 import face4j.model.Photo;
 import face4j.model.RemovedTag;
 import face4j.model.SavedTag;
@@ -106,6 +107,18 @@ final class ResponseHelper
 		}
 		
 		return strings;
+	}
+	
+	static List<Namespace> toNamespaceList (JSONArray jArr) throws JSONException
+	{
+		final List<Namespace> namespaces = new ArrayList<Namespace>();
+		
+		for (int i = 0; i < jArr.length(); i++)
+		{
+			namespaces.add(new Namespace(jArr.getJSONObject(i)));
+		}
+		
+		return namespaces;
 	}
 	
 	static int optInt (JSONObject jObj, String name) throws JSONException
