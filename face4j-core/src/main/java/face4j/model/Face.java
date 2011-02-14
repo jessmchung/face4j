@@ -27,6 +27,7 @@ import static face4j.model.Point.fromJson;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -146,7 +147,15 @@ public class Face
 
 	public Guess getGuess ()
 	{
-		return Collections.max(guesses);
+		try 
+		{
+			return Collections.max(guesses);
+		}
+		
+		catch (NoSuchElementException nsee)
+		{
+			return null;
+		}
 	}
 
 	/*
