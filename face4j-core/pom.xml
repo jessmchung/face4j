@@ -6,7 +6,7 @@
   <parent>
     <artifactId>face4j</artifactId>
     <groupId>org.face4j</groupId>
-    <version>1.5</version>
+    <version>1.5.1</version>
   </parent>
   <groupId>org.face4j</groupId>
   <artifactId>face4j-core</artifactId>
