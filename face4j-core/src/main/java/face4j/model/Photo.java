@@ -141,7 +141,19 @@ public class Photo
 	{
 		return this.tags;
 	}
-	
+
+	public void scaleFaceRects(float width, float height)
+	{
+		for (Face f : getFaces())
+		{
+			final Rect r = f.getRectangle();
+			
+			r.left   *= (width/100);
+			r.right  *= (width/100);
+			r.top    *= (height/100);
+			r.bottom *= (height/100);
+		}
+	}
 	public Face getFace()
 	{
 		try
