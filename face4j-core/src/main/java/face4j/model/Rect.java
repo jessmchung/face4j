@@ -20,19 +20,19 @@ public class Rect
 	public Rect (Point center, float width, float height)
 	{
 		this (
-				center.x - (width/2),
-				center.y + (height/2),
-				center.x + (width/2),
-				center.y - (height/2)
+				center.x - (width/2f),
+				center.y - (height/2f),
+				center.x + (width/2f),
+				center.y + (height/2f)
 				);
 	}
 	
 	public Rect (float left, float top, float right, float bottom)
 	{
-		this.top    = top;
-		this.bottom = bottom;
 		this.left   = left;
+		this.top    = top;
 		this.right  = right;
+		this.bottom = bottom;
 	}
 	
 	public boolean contains (Point p)
@@ -41,12 +41,9 @@ public class Rect
 	}
 	
 	public boolean contains (float x, float y)
-	{
-		return 
-			bottom <= y &&
-			right  >= x &&
-			left   <= x && 
-			top    >= y; 
+	{ 
+		return left < right && top < bottom  // check for empty first
+               && x >= left && x < right && y >= top && y < bottom;
 	}
 	
 	public boolean contains (Rect r)
