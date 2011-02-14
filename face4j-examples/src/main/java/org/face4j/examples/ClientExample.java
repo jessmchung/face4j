@@ -10,11 +10,11 @@ public class ClientExample
 {
 	private static final String API_KEY = "";
 	private static final String API_SEC = "";
-	
+
 	private static final String URL_WITH_FACES = "";
-	
+
 	private static final String USER_ID = "a_user_id@yournamespace";
-	
+
     public static void main(String[] args) throws FaceClientException, FaceServerException
     {
     	FaceClient faceClient = new DefaultFaceClient(API_KEY, API_SEC);
