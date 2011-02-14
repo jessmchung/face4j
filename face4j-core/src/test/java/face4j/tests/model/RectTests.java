@@ -16,8 +16,8 @@ public class RectTests
 	{
 		Rect r = new Rect();
 		
-		r.bottom = 1;
-		r.top	 = 4;
+		r.bottom = 4;
+		r.top	 = 1;
 		r.right  = 5;
 		r.left   = 1;
 		
@@ -31,7 +31,7 @@ public class RectTests
 		Point p_in  = new Point(5,5);
 		Point p_out = new Point(5,7);
 		
-		Rect r  = new Rect(1,6,7,1);
+		Rect r  = new Rect(1,1,7,6);
 		
 		assertTrue(r.contains(p_in));
 		assertFalse(r.contains(p_out));
