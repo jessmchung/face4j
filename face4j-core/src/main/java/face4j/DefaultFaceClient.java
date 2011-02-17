@@ -73,7 +73,7 @@ public class DefaultFaceClient implements FaceClient
 	private static final Logger logger = LoggerFactory.getLogger(FaceClient.class);
 	
 	/**
-	 * Default API end point
+	 * Default API end point @TODO: set from properties
 	 */
 	private static final String API_ENDPOINT = "http://api.face.com";
 	
@@ -84,6 +84,8 @@ public class DefaultFaceClient implements FaceClient
 	
 	/**
 	 * Facebook and twitter credentials
+	 * 
+	 * @TODO: Implement facebook OAuth dance
 	 */
 	private final Credentials creds;
 	
@@ -144,11 +146,7 @@ public class DefaultFaceClient implements FaceClient
 		Validate.notEmpty(tids, "Tag ids cannot be empty");
 		
 		final Parameters params = new Parameters("tids", tids);
-		
-		params.putAll(reqd.getMap());
-		params.put("user_auth", creds.getAuthString());
-
-		final String json = executePost(baseURI.resolve(Api.REMOVE_TAGS), params);
+		final String json = executePost(Api.REMOVE_TAGS, params);
 		final RemoveTagResponse response = new RemoveTagResponseImpl(json);
 		
 		return response.getRemovedTags();	
@@ -159,12 +157,8 @@ public class DefaultFaceClient implements FaceClient
 	 */
 	public TrainResponse train (final String uids) throws FaceClientException, FaceServerException
 	{
-		final Parameters params = new Parameters("uids", uids);
-		
-		params.put("user_auth", creds.getAuthString());
-		params.putAll(reqd.getMap());
-		
-		final String json = executePost(baseURI.resolve(Api.TRAIN), params);
+		final Parameters params = new Parameters("uids", uids);		
+		final String json = executePost(Api.TRAIN, params);
 		final TrainResponse response = new TrainResponseImpl(json);
 		
 		return response;
@@ -196,11 +190,9 @@ public class DefaultFaceClient implements FaceClient
 		params.put("url", url);
 		params.put("uid", uid);
 		params.put("label", label);
-		params.put("user_auth", creds.getAuthString());
-		params.putAll(reqd.getMap());
 
 		// No response
-		executePost(baseURI.resolve(Api.ADD_TAG), params);
+		executePost(Api.ADD_TAG, params);
 	}
 	
 	/**
@@ -240,10 +232,8 @@ public class DefaultFaceClient implements FaceClient
 		params.put("filter", filter);
 		params.put("together", together);
 		params.put("limit", limit);
-		params.put("user_auth", creds.getAuthString());
-				params.putAll(reqd.getMap());
-
-		final String json = executePost(baseURI.resolve(Api.GET_TAGS), params);
+		
+		final String json = executePost(Api.GET_TAGS, params);
 		final PhotoResponse response = new PhotoResponseImpl(json);
 		
 		return response.getPhotos();
@@ -262,10 +252,8 @@ public class DefaultFaceClient implements FaceClient
 		
 		params.put("uid", uid);
 		params.put("label", label);
-		params.put("user_auth", creds.getAuthString());
-		params.putAll(reqd.getMap());
-
-		final String json = executePost(baseURI.resolve(Api.SAVE_TAGS), params);
+		
+		final String json = executePost(Api.SAVE_TAGS, params);
 		final SaveTagResponse response = new SaveTagResponseImpl(json);
 
 		return response.getSavedTags();
@@ -281,11 +269,7 @@ public class DefaultFaceClient implements FaceClient
 		Validate.notEmpty(uids, "User IDs cannot be null");
 			
 		final Parameters params = new Parameters("uids", uids);
-		
-		params.put("user_auth", creds.getAuthString());
-		params.putAll(reqd.getMap());
-
-		final String json =  executePost(imageFile, baseURI.resolve(Api.RECOGNIZE), params);
+		final String json =  executePost(imageFile, Api.RECOGNIZE, params);
 		final PhotoResponse response = new PhotoResponseImpl(json);		
 		
 		return response.getPhoto();
@@ -302,10 +286,8 @@ public class DefaultFaceClient implements FaceClient
 		final Parameters params = new Parameters("uids", uids);
 		
 		params.put("urls", urls);
-		params.put("user_auth", creds.getAuthString());
-		params.putAll(reqd.getMap());
 
-		final String json = executePost(baseURI.resolve(Api.RECOGNIZE), params);
+		final String json = executePost(Api.RECOGNIZE, params);
 		final PhotoResponse response = new PhotoResponseImpl(json);
 				
 		return response.getPhotos();
@@ -319,7 +301,7 @@ h	 * @see {@link FaceClient#detect(URL)}
 		Validate.notNull(imageFile, "File is null");
 		Validate.isTrue(imageFile.exists(), "File doesn't exist!");
 		
-		final String json = executePost(imageFile, baseURI.resolve(Api.DETECT), reqd);
+		final String json = executePost(imageFile, Api.DETECT, new Parameters());
 		final PhotoResponse response = new PhotoResponseImpl(json);
 		
 		return response.getPhoto();
@@ -335,9 +317,8 @@ h	 * @see {@link FaceClient#detect(URL)}
 		final Parameters params = new Parameters();
 		
 		params.put("urls", urls);
-		params.putAll(reqd.getMap());
-
-		final String json = executePost(baseURI.resolve(Api.DETECT), params);
+		
+		final String json = executePost(Api.DETECT, params);
 		final PhotoResponse response = new PhotoResponseImpl(json);
 		
 		return response.getPhotos();
@@ -351,12 +332,10 @@ h	 * @see {@link FaceClient#detect(URL)}
 		Validate.notEmpty(uids, "UIDs cant be empty");
 				
 		final Parameters params = new Parameters();
-		
-		params.put("user_auth", creds.getAuthString());
+
 		params.put("uids", uids);
-		params.putAll(reqd.getMap());
 		
-		final String json = executePost(baseURI.resolve(Api.STATUS), params);
+		final String json = executePost(Api.STATUS, params);
 		final StatusResponse response = new StatusResponseImpl(json);
 			
 		return response.getTrainingStatus();
@@ -370,11 +349,10 @@ h	 * @see {@link FaceClient#detect(URL)}
 		Validate.notEmpty(uids, "User IDs cannot be empty");
 		
 		final Parameters params = new Parameters();
-		params.put("user_auth", creds.getAuthString());
+
 		params.put("uids", uids);
-		params.putAll(reqd.getMap());
 		
-		final String json = executePost(baseURI.resolve(Api.FACEBOOK), params);
+		final String json = executePost(Api.FACEBOOK, params);
 		final PhotoResponse response = new PhotoResponseImpl(json);
 						
 		return response.getPhotos();	
@@ -392,10 +370,8 @@ h	 * @see {@link FaceClient#detect(URL)}
 		
 		params.put("uids", uids);
 		params.put("urls", urls);
-		params.put("user_auth", creds.getAuthString());
-		params.putAll(reqd.getMap());
 
-		final String json = http.doPost(baseURI.resolve(Api.GROUP), params.toPostParams());
+		final String json = executePost(Api.GROUP, params);
 		final GroupResponse response = new GroupResponseImpl(json);
 						
 		return response;
@@ -412,10 +388,8 @@ h	 * @see {@link FaceClient#detect(URL)}
 		final Parameters params = new Parameters();
 		
 		params.put("uids", uids);
-		params.put("user_auth", creds.getAuthString());
-		params.putAll(reqd.getMap());
 		
-		final String json = executePost(imageFile, baseURI.resolve(Api.GROUP), params);
+		final String json = executePost(imageFile, Api.GROUP, params);
 		final GroupResponse response = new GroupResponseImpl(json);
 			
 		return response;
@@ -430,9 +404,8 @@ h	 * @see {@link FaceClient#detect(URL)}
 		
 		final Parameters params = new Parameters();
 		params.put("namespaces", namespaces);
-		params.putAll(reqd.getMap());
 		
-		final String json = executePost(baseURI.resolve(Api.USERS), params);
+		final String json = executePost(Api.USERS, params);
 		final UsersResponse response = new UsersResponseImpl(json, namespaces);
 		
 		return response;
@@ -443,7 +416,7 @@ h	 * @see {@link FaceClient#detect(URL)}
 	 */
 	public LimitsResponse limits () throws FaceClientException, FaceServerException
 	{
-		final String json = executePost(baseURI.resolve(Api.LIMITS), reqd);
+		final String json = executePost(Api.LIMITS, new Parameters());
 		final LimitsResponse response = new LimitsResponseImpl(json);
 		
 		return response;
@@ -454,7 +427,7 @@ h	 * @see {@link FaceClient#detect(URL)}
 	 */
 	public List<Namespace> namespaces() throws FaceClientException, FaceServerException
 	{
-		final String json = executePost(baseURI.resolve(Api.NAMESPACES), reqd);
+		final String json = executePost(Api.NAMESPACES, new Parameters());
 		final NamespaceResponse response = new NamespaceResponseImpl(json);
 		
 		return response.getNamespaces();
@@ -532,13 +505,18 @@ h	 * @see {@link FaceClient#detect(URL)}
 		return isAggressive;	
 	}
 	
-	private String executePost(URI uri, Parameters params) throws FaceClientException, FaceServerException
+	private String executePost(String api, Parameters params) throws FaceClientException, FaceServerException
 	{
-		return executePost(null, uri, params);
+		return executePost(null, api, params);
 	}
 	
-	private String executePost(File file, URI uri, Parameters params) throws FaceClientException, FaceServerException
+	private String executePost(File file, String api, Parameters params) throws FaceClientException, FaceServerException
 	{
+		final URI uri = baseURI.resolve(api);
+		
+		params.putAll(reqd.getMap());
+		params.put("user_auth", creds.getAuthString());
+
 		if (logger.isInfoEnabled())
 		{
 			logger.info("POSTing to: {} ", uri.toString());
