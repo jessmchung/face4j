@@ -34,7 +34,7 @@ public class FaceServerException extends FaceAPIException
 	
 	private final int errorCode;
 	
-	public FaceServerException(String msg, int errorCode) throws FaceClientException
+	public FaceServerException(String msg, int errorCode)
 	{
 		super(msg);
 		this.errorCode = errorCode;
