@@ -110,8 +110,8 @@ public class Face
 		rightEye = fromJson(jObj.optJSONObject("eye_right"));
 		
 		mouthCenter = fromJson(jObj.optJSONObject("mouth_center"));
-		mouthRight  = fromJson(jObj.optJSONObject("mouthRight"));
-		mouthLeft   = fromJson(jObj.optJSONObject("mouth_right"));
+		mouthRight  = fromJson(jObj.optJSONObject("mouth_right"));
+		mouthLeft   = fromJson(jObj.optJSONObject("mouth_left"));
 		
 		nose = fromJson(jObj.optJSONObject("nose"));
 		
