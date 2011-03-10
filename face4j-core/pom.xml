@@ -2,16 +2,19 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" 
 		 xmlns="http://maven.apache.org/POM/4.0.0"
     	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <artifactId>face4j</artifactId>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>face4j</artifactId>
+		<groupId>org.face4j</groupId>
+    	<version>1.5.1</version>
+    </parent>
     <groupId>org.face4j</groupId>
-    <version>1.5.1</version>
-  </parent>
-  <groupId>org.face4j</groupId>
-  <artifactId>face4j-core</artifactId>
-  <version>${project.parent.version}</version>
-  <name>face4j-core</name>
+    <artifactId>face4j-core</artifactId>
+    <version>${project.parent.version}</version>
+    <packaging>jar</packaging>
+    <name>face4j-core</name>
+    <url>http://github.com/mhendred/face4j</url>
+    <!-- DEPENDENCIES -->
   <dependencies>
     <dependency>
     	<groupId>commons-lang</groupId>
@@ -66,4 +69,29 @@
     	<version>1.6.1</version>
     </dependency>
   </dependencies>
+  <!-- BUILD SETTINGS -->
+   <build>
+   <plugins>
+    	<plugin>
+    		<groupId>org.apache.maven.plugins</groupId>
+    		<artifactId>maven-dependency-plugin</artifactId>
+    		<executions>
+    			<execution>
+    				<id>copy-dependencies</id>
+    				<phase>prepare-package</phase>
+    				<goals>
+    					<goal>copy-dependencies</goal>
+                    </goals>
+                    <configuration>
+                    	<outputDirectory>${project.build.directory}/lib</outputDirectory>
+                    	<excludeArtifactIds>json,junit,log4j,slf4j-log4j12</excludeArtifactIds>
+                    	<overWriteReleases>false</overWriteReleases>
+                    	<overWriteSnapshots>false</overWriteSnapshots>
+                    	<overWriteIfNewer>true</overWriteIfNewer>
+                    </configuration>
+				</execution>
+			</executions>
+		</plugin>
+	</plugins>
+	</build>
 </project>
