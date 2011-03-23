@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+face4j is a Java client library for face.com licensed under the MIT License
+---------------------------------------------------------------------------
+
+Author: Marlon Hendred
+
+---------------------------------------------------------------------------
+Modules:
+
+- face4j-core (core library)
+- face4j-examples examples (facebook and twitter examples comming soon)
+
+---------------------------------------------------------------------------
+ BUILD INSTRUCTIONS
+- - - - - - - - - - -
+1. Make sure you have maven 2.2.1 installed
+3. cd into the face4j root directory
+2. $mvn clean install
+
+---------------------------------------------------------------------------
+ ADDING TO PROJECTS
+- - - - - - - - - - -
+.:maven:. now you may add face4j as a dependency to your maven project by adding the following to your op
+
+	<dependency>
+		<groupId>org.face4j</groupId>
+		<artifactId>face4j-core</artifactId>
+		<version><!-- version number --></version>
+	<dependency>
+
+.:android:. add the face4j-core-$(version).jar and the following jars from face4j/face4j-core/target/lib/ to your Android project's build path:
+	
+	+ slf4j-android-1.6.1-RC1.jar
+	+ httpmime-4.0.3.jar
+	+ commons-lang-2.6.jar
+	+ apache-mime4j-0.6.jar
+
+----------------------------------------------------------------------------
