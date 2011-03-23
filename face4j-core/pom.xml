@@ -68,6 +68,11 @@
     	<artifactId>slf4j-log4j12</artifactId>
     	<version>1.6.1</version>
     </dependency>
+	<dependency>
+  	  <groupId>org.slf4j</groupId>
+	  <artifactId>slf4j-android</artifactId>
+	  <version>1.6.1-RC1</version>
+	</dependency>
   </dependencies>
   <!-- BUILD SETTINGS -->
    <build>
@@ -84,10 +89,10 @@
                     </goals>
                     <configuration>
                     	<outputDirectory>${project.build.directory}/lib</outputDirectory>
-                    	<excludeArtifactIds>json,junit,log4j,slf4j-log4j12</excludeArtifactIds>
                     	<overWriteReleases>false</overWriteReleases>
                     	<overWriteSnapshots>false</overWriteSnapshots>
                     	<overWriteIfNewer>true</overWriteIfNewer>
+						<excludeTransitive>true</excludeTransitive>
                     </configuration>
 				</execution>
 			</executions>
