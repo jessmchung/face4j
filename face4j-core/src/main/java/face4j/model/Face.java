@@ -405,8 +405,8 @@ public class Face
 	public String toString ()
 	{
 		StringBuilder builder = new StringBuilder();
-		
 		builder.append("Face [center=").append(center)
+			   .append(", chin=").append(chin)
 			   .append(", confirmed=").append(confirmed)
 			   .append(", faceConfidence=").append(faceConfidence)
 			   .append(", faceRect=").append(faceRect)
@@ -415,6 +415,7 @@ public class Face
 			   .append(", guesses=").append(guesses)
 			   .append(", height=").append(height)
 			   .append(", label=").append(label)
+			   .append(", leftEar=").append(leftEar)
 			   .append(", leftEye=").append(leftEye)
 			   .append(", manual=").append(manual)
 			   .append(", mouthCenter=").append(mouthCenter)
@@ -422,13 +423,15 @@ public class Face
 			   .append(", mouthRight=").append(mouthRight)
 			   .append(", nose=").append(nose)
 			   .append(", pitch=").append(pitch)
+			   .append(", rightEar=").append(rightEar)
 			   .append(", rightEye=").append(rightEye)
 			   .append(", roll=").append(roll)
 			   .append(", smiling=").append(smiling)
 			   .append(", threshold=").append(threshold)
 			   .append(", tid=").append(tid)
 			   .append(", width=").append(width)
-			   .append(", yaw=").append(yaw).append("]");
+			   .append(", yaw=").append(yaw)
+			   .append("]");
 		
 		return builder.toString();
 	}
