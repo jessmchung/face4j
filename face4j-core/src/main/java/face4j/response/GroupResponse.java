@@ -25,9 +25,25 @@ package face4j.response;
 import java.util.List;
 
 import face4j.model.Group;
+import face4j.model.Photo;
 
-public interface GroupResponse extends PhotoResponse 
+public interface GroupResponse
 {
+	/**
+	 * @return A {@code List<Group>} from the response
+	 */
 	public List<Group> getGroups();
+	
+	/**
+	 * @return A {@code List<Photo>} from the response
+	 */
+	public List<Photo> getPhotos();
+
+	/**
+	 * Convenience method for getting single photo from response
+	 * 
+	 * @return {@link Photo} 
+	 */
+	public Photo getPhoto();
 	
 }

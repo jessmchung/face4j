@@ -14,9 +14,7 @@ abstract class AbstractResponse
 	protected final JSONObject response;
 	
 	protected AbstractResponse(final String json) throws FaceClientException
-	{
-		
-		
+	{	
 		try 
 		{
 			response = new JSONObject(json);

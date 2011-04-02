@@ -23,6 +23,7 @@
 package face4j.response;
 
 import static face4j.response.ResponseHelper.toGroupList;
+import static face4j.response.ResponseHelper.toPhotoList;
 
 import java.util.List;
 
@@ -32,12 +33,15 @@ import org.slf4j.LoggerFactory;
 
 import face4j.exception.FaceClientException;
 import face4j.model.Group;
+import face4j.model.Photo;
 
-public final class GroupResponseImpl extends PhotoResponseImpl implements GroupResponse
+public final class GroupResponseImpl extends AbstractResponse implements GroupResponse
 {
 	private static final Logger logger = LoggerFactory.getLogger(GroupResponse.class);
 	
 	private final List<Group> groups;
+	
+	private final List<Photo> photos;
 	
 	public GroupResponseImpl(String json) throws FaceClientException
 	{
@@ -46,6 +50,7 @@ public final class GroupResponseImpl extends PhotoResponseImpl implements GroupR
 		try
 		{
 			groups = toGroupList(response.getJSONArray("groups"));
+			photos = toPhotoList(response.getJSONArray("photos"));
 			
 			if (logger.isDebugEnabled())
 			{
@@ -62,6 +67,39 @@ public final class GroupResponseImpl extends PhotoResponseImpl implements GroupR
 	public List<Group> getGroups ()
 	{
 		return groups;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.face.api.client.response.PhotoReponse#getPhotos()
+	 */
+	public List<Photo> getPhotos ()
+	{
+		return photos;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.face.api.client.response.PhotoReponse#getPhoto()
+	 */
+	public Photo getPhoto ()
+	{
+		try
+		{
+			return photos.get(0);
+		}
+		
+		catch (IndexOutOfBoundsException ioob)
+		{
+			if (logger.isInfoEnabled())
+			{
+				logger.info("No photos...");
+			}
+			
+			return null;
+		}
 	}
 
 	public String toString ()
