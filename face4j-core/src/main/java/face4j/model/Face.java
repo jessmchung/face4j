@@ -75,6 +75,12 @@ public class Face
 
 	private Point mouthCenter;
 
+	private Point leftEar;
+	
+	private Point rightEar;
+	
+	private Point chin;
+	
 	private Point nose;
 
 	private Rect faceRect;
@@ -108,6 +114,11 @@ public class Face
 		
 		leftEye  = fromJson(jObj.optJSONObject("eye_left"));
 		rightEye = fromJson(jObj.optJSONObject("eye_right"));
+		
+		leftEar  = fromJson(jObj.optJSONObject("ear_left"));
+		rightEar = fromJson(jObj.optJSONObject("ear_right"));
+		
+		chin = fromJson(jObj.optJSONObject("chin"));
 		
 		mouthCenter = fromJson(jObj.optJSONObject("mouth_center"));
 		mouthRight  = fromJson(jObj.optJSONObject("mouth_right"));
@@ -248,6 +259,21 @@ public class Face
 		return leftEye;
 	}
 
+	public Point getLeftEar ()
+	{
+		return leftEar;
+	}
+	
+	public Point getRightEar ()
+	{
+		return rightEar;
+	}
+	
+	public Point getChin ()
+	{
+		return chin;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
