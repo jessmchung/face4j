@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2010 Marlon Hendred
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -35,12 +35,12 @@ import org.json.JSONObject;
 
 /**
  * Holds "Tag" JSON object
- * 
+ *
  * @author mhendred
- * 
+ *
  */
 public class Face
-{		
+{
 	private final String tid;
 
 	private String label;
@@ -57,9 +57,15 @@ public class Face
 
 	private boolean smiling;
 
+    private int smilingConfidence;
+
 	private boolean glasses;
 
+    private int glassesConfidence;
+
 	private Gender gender;
+
+    private int genderConfidence;
 
 	private List<Guess> guesses;
 
@@ -76,22 +82,24 @@ public class Face
 	private Point mouthCenter;
 
 	private Point leftEar;
-	
+
 	private Point rightEar;
-	
+
 	private Point chin;
-	
+
 	private Point nose;
 
 	private Rect faceRect;
 
 	private int threshold;
-	
+
 	private float yaw;
-	
+
 	private float roll;
-	
+
 	private float pitch;
+
+    private boolean recognizable;
 
 	public Face(JSONObject jObj) throws JSONException
 	{
@@ -100,55 +108,62 @@ public class Face
 
 		confirmed = jObj.getBoolean("confirmed");
 		manual = jObj.getBoolean("manual");
-		
+
 		width  = (float) jObj.getDouble("width");
 		height = (float) jObj.getDouble("height");
-		
+
 		yaw   = (float) jObj.getDouble("yaw");
 		roll  = (float) jObj.getDouble("roll");
 		pitch = (float) jObj.getDouble("pitch");
-		
+
 		threshold = jObj.optInt("threshold");
-		
+
 		center = fromJson(jObj.optJSONObject("center"));
-		
+
 		leftEye  = fromJson(jObj.optJSONObject("eye_left"));
 		rightEye = fromJson(jObj.optJSONObject("eye_right"));
-		
+
 		leftEar  = fromJson(jObj.optJSONObject("ear_left"));
 		rightEar = fromJson(jObj.optJSONObject("ear_right"));
-		
+
 		chin = fromJson(jObj.optJSONObject("chin"));
-		
+
 		mouthCenter = fromJson(jObj.optJSONObject("mouth_center"));
 		mouthRight  = fromJson(jObj.optJSONObject("mouth_right"));
 		mouthLeft   = fromJson(jObj.optJSONObject("mouth_left"));
-		
+
 		nose = fromJson(jObj.optJSONObject("nose"));
-		
+
 		guesses = Guess.fromJsonArray(jObj.optJSONArray("uids"));
-		
+
+        recognizable = jObj.getBoolean("recognizable");
+
 		// Attributes
 		jObj = jObj.getJSONObject("attributes");
 
-		if (jObj.has("smiling"))
+		if (jObj.has("smiling")){
 			smiling = jObj.getJSONObject("smiling").getBoolean("value");
+            smilingConfidence = jObj.getJSONObject("smiling").getInt("confidence");
+        }
 
-		if (jObj.has("glasses"))
+		if (jObj.has("glasses")){
 			glasses = jObj.getJSONObject("glasses").getBoolean("value");
+            glassesConfidence = jObj.getJSONObject("glasses").getInt("confidence");
+        }
 
-		if (jObj.has("gender"))
+		if (jObj.has("gender")){
 			gender = Gender.valueOf(jObj.getJSONObject("gender").getString("value"));
+            genderConfidence = jObj.getJSONObject("gender").getInt("confidence");
+        }
 
 		faceConfidence = jObj.getJSONObject("face").getInt("confidence");
-		
-		faceRect = new Rect(center, width, height);		
 
+		faceRect = new Rect(center, width, height);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getUids()
 	 */
 	public List<Guess> getGuesses ()
@@ -158,11 +173,11 @@ public class Face
 
 	public Guess getGuess ()
 	{
-		try 
+		try
 		{
 			return Collections.max(guesses);
 		}
-		
+
 		catch (NoSuchElementException nsee)
 		{
 			return null;
@@ -171,7 +186,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getWidth()
 	 */
 	public double getWidth ()
@@ -181,7 +196,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getHeight()
 	 */
 	public double getHeight ()
@@ -191,7 +206,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getLabel()
 	 */
 	public String getLabel ()
@@ -201,7 +216,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getTID()
 	 */
 	public String getTID ()
@@ -211,7 +226,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getThreshHold()
 	 */
 	public int getThreshHold ()
@@ -221,7 +236,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#isConfirmed()
 	 */
 	public boolean isConfirmed ()
@@ -231,7 +246,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#isManual()
 	 */
 	public boolean isManual ()
@@ -241,7 +256,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getCenter()
 	 */
 	public Point getCenter ()
@@ -251,7 +266,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getLeftEye()
 	 */
 	public Point getLeftEye ()
@@ -263,20 +278,20 @@ public class Face
 	{
 		return leftEar;
 	}
-	
+
 	public Point getRightEar ()
 	{
 		return rightEar;
 	}
-	
+
 	public Point getChin ()
 	{
 		return chin;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getRightEye()
 	 */
 	public Point getRightEye ()
@@ -286,7 +301,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getMouthCenter()
 	 */
 	public Point getMouthCenter ()
@@ -296,7 +311,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getMouthRight()
 	 */
 	public Point getMouthRight ()
@@ -306,7 +321,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getMouthLeft()
 	 */
 	public Point getMouthLeft ()
@@ -316,7 +331,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#isFace()
 	 */
 	public boolean isFace ()
@@ -326,13 +341,17 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#isWearingGlasses()
 	 */
 	public boolean isWearingGlasses ()
 	{
 		return glasses;
 	}
+
+        public int getGlassesConfidence(){
+            return glassesConfidence;
+        }
 
 	public float getYaw ()
 	{
@@ -351,7 +370,7 @@ public class Face
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#isSmiling()
 	 */
 	public boolean isSmiling ()
@@ -359,9 +378,13 @@ public class Face
 		return smiling;
 	}
 
+        public int getSmilingConfidence(){
+            return smilingConfidence;
+        }
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getGender()
 	 */
 	public Gender getGender ()
@@ -369,9 +392,13 @@ public class Face
 		return gender;
 	}
 
+        public int getGenderConfidence(){
+            return genderConfidence;
+        }
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.face.api.client.model.Face#getNose()
 	 */
 	public Point getNose ()
@@ -383,21 +410,29 @@ public class Face
 	{
 		return faceRect;
 	}
-	
+
 	public void setLabel (final String label)
 	{
 		this.label = label;
 	}
-	
+
+        public int getFaceConfidence(){
+            return faceConfidence;
+        }
+
+        public boolean IsRecognizable(){
+            return recognizable;
+        }
+
 	static List<Face> fromJsonArray (JSONArray jArr) throws JSONException
 	{
 		final List<Face> faces = new LinkedList<Face>();
-		
+
 		for (int i = 0; i < jArr.length(); i++)
 		{
 			faces.add(new Face(jArr.getJSONObject(i)));
 		}
-		
+
 		return faces;
 	}
 
@@ -411,7 +446,9 @@ public class Face
 			   .append(", faceConfidence=").append(faceConfidence)
 			   .append(", faceRect=").append(faceRect)
 			   .append(", gender=").append(gender)
+                           .append(", genderConfidence=").append(genderConfidence)
 			   .append(", glasses=").append(glasses)
+                           .append(", glassesConfidence=").append(glassesConfidence)
 			   .append(", guesses=").append(guesses)
 			   .append(", height=").append(height)
 			   .append(", label=").append(label)
@@ -427,12 +464,14 @@ public class Face
 			   .append(", rightEye=").append(rightEye)
 			   .append(", roll=").append(roll)
 			   .append(", smiling=").append(smiling)
+                           .append(", smilingConfidence=").append(smilingConfidence)
 			   .append(", threshold=").append(threshold)
 			   .append(", tid=").append(tid)
 			   .append(", width=").append(width)
 			   .append(", yaw=").append(yaw)
+                           .append(", recognizable=").append(recognizable)
 			   .append("]");
-		
+
 		return builder.toString();
 	}
 }
